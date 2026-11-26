@@ -1,0 +1,8 @@
+# Dépendances
+node_modules/
+
+# Configuration locale : jamais versionnée (contient des secrets)
+.env
+
+# Logs
+npm-debug.log*
