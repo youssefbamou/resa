@@ -1,0 +1,21 @@
+name: Seed backlog
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: seed-backlog
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: node scripts/seed-backlog.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

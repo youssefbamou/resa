@@ -1,0 +1,19 @@
+{
+  "name": "resa",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Résa — réservation des salles du campus",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "doctor": "node scripts/doctor.mjs"
+  },
+  "dependencies": {
+    "cors": "2.8.5",
+    "dotenv": "16.6.1",
+    "express": "4.17.1",
+    "lodash": "4.17.15",
+    "pg": "8.23.1"
+  }
+}

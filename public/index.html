@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Résa</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="header">
+      <img src="logo.svg" />
+      <span class="title">Résa</span>
+    </div>
+    <div class="container">
+      <div class="panel">
+        <div class="panel-title">Nouvelle réservation</div>
+        <select id="room"></select>
+        <input id="title" placeholder="Objet" />
+        <input id="start" type="datetime-local" />
+        <input id="end" type="datetime-local" />
+        <div class="btn">Réserver</div>
+        <div id="message"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Réservations</div>
+        <input id="q" placeholder="Rechercher..." />
+        <div id="bookings"></div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
