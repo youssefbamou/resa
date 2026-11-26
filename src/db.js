@@ -2,11 +2,14 @@ const { Pool, types } = require("pg");
 
 types.setTypeParser(1114, (value) => value);
 
-const pool = new Pool({
-  connectionString:
-    process.env.DATABASE_URL ||
-    "postgres://resa:Resa2026!Bdx@localhost:5432/resa",
-});
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error(
+    "DATABASE_URL manquante : copiez .env.example vers .env (cp .env.example .env)",
+  );
+}
+
+const pool = new Pool({ connectionString });
 
 pool.on("error", (err) => {
   console.error("PostgreSQL :", err.message);

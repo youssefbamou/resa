@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER manquante, copiez .env.example vers .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD manquante, copiez .env.example vers .env}
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB manquante, copiez .env.example vers .env}
+    volumes:
+      # Les données survivent au conteneur
+      - db-data:/var/lib/postgresql/data
+      # Schéma + données de départ, exécutés au premier démarrage
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      # Joignable depuis votre machine seulement, pas depuis le réseau
+      - "127.0.0.1:${PGPORT:-5433}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      # Dans le réseau Compose, le nom du service "db" est le nom d'hôte
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    ports:
+      - "${PORT:-3000}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db-data:
